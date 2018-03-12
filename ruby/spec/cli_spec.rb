@@ -3,6 +3,12 @@
 require 'spec_helper'
 
 describe 'fun_with_dates_extremes', type: :aruba do
+  context '01/01/2000 01/01/2000' do
+    it 'prints out 0' do
+      run './fun_with_dates.rb 01/01/2000 01/01/2000'
+      expect(last_command_started).to have_output_on_stdout('0')
+    end
+  end
   context '01/01/2000 03/01/2000' do
     it 'prints out 1' do
       run './fun_with_dates.rb 01/01/2000 03/01/2000'

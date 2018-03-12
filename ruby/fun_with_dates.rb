@@ -17,4 +17,6 @@ d = if d2 > d1
       (d1 - d2).to_i - 1
     end
 
+d = 0 if d.negative?
+
 puts d
