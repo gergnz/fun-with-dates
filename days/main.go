@@ -1,35 +1,73 @@
 package days
 
 import (
+	"strconv"
 	"strings"
-	"time"
-
-	"github.com/araddon/dateparse"
 )
 
-func Main(arg1 string, arg2 string) int {
-	// dateparse only handles US dates, so swap to AU dates
-	x1 := strings.Split(arg1, "/")
-	a1 := []string{x1[1], x1[0], x1[2]}
-	d1 := strings.Join(a1, "/")
-
-	x2 := strings.Split(arg2, "/")
-	a2 := []string{x2[1], x2[0], x2[2]}
-	d2 := strings.Join(a2, "/")
-
-	t1, _ := dateparse.ParseIn(d1, time.UTC)
-	t2, _ := dateparse.ParseIn(d2, time.UTC)
-
-
-  days := 0
-	if t2.After(t1) {
-    days = int(t2.Sub(t1).Hours())/24 - 1
-	} else {
-    days = int(t1.Sub(t2).Hours())/24 - 1
+func monthstodays(month int) int {
+	months := []int{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+	days := 0
+	for i := 1; i <= month; i++ {
+		days += months[i]
 	}
-    if days < 0 {
-      days = 0
-    }
-    return days
+	return days
+}
+
+func yearstodays(year int) int {
+	return (year - 1900) * 365
+}
+
+func leapdays(date2 [3]int, date1 [3]int) int {
+	days := 0
+	if (date1[2] % 4) == 0 {
+		if date1[1] == 2 {
+			days += 1
+		}
+	}
+	if (date2[2] % 4) == 0 {
+		if date2[1] == 2 {
+			days -= 1
+		}
+		if date2[0] == 29 {
+			days += 1
+		}
+	}
+	return days + date2[2]/4 - date1[2]/4
+}
+
+func Main(arg1 string, arg2 string) int {
+
+	rawdate1 := strings.Split(arg1, "/")
+	rawdate2 := strings.Split(arg2, "/")
+
+	date1 := [3]int{}
+	date2 := [3]int{}
+
+	for i := 0; i <= 2; i++ {
+		date1[i], _ = strconv.Atoi(rawdate1[i])
+	}
+	for i := 0; i <= 2; i++ {
+		date2[i], _ = strconv.Atoi(rawdate2[i])
+	}
+
+	days1 := yearstodays(int(date1[2])) + monthstodays(int(date1[1])) + int(date1[0])
+	days2 := yearstodays(int(date2[2])) + monthstodays(int(date2[1])) + int(date2[0])
+
+	days := 0
+
+	if days2 > days1 {
+		days = days2 - days1 - 1
+		days += leapdays(date2, date1)
+	} else {
+		days = days1 - days2 - 1
+		days += leapdays(date1, date2)
+	}
+
+	if days < 0 {
+		days = 0
+	}
+
+	return days
 
 }
