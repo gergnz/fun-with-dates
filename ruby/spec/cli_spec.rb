@@ -43,3 +43,12 @@ describe 'fun_with_dates_tests', type: :aruba do
     end
   end
 end
+
+describe 'fun_with_dates_leap_years', type: :aruba do
+  context '27/02/1980 01/03/1980' do
+    it 'prints out 2' do
+      run './fun_with_dates.rb 27/02/1980 01/03/1980'
+      expect(last_command_started).to have_output_on_stdout('2')
+    end
+  end
+end
