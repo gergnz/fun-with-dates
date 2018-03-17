@@ -52,21 +52,21 @@ describe 'fun_with_dates_leap_years', type: :aruba do
     end
   end
   context '01/03/1980 1/03/1984' do
-    it 'prints out 1459' do
+    it 'prints out 1460' do
       run './fun_with_dates.rb 01/03/1980 01/03/1984'
-      expect(last_command_started).to have_output_on_stdout('1459')
+      expect(last_command_started).to have_output_on_stdout('1460')
     end
   end
   context '01/02/1980 1/03/1984' do
-    it 'prints out 1488' do
+    it 'prints out 1489' do
       run './fun_with_dates.rb 01/02/1980 01/03/1984'
-      expect(last_command_started).to have_output_on_stdout('1488')
+      expect(last_command_started).to have_output_on_stdout('1489')
     end
   end
   context '01/02/1980 1/02/1984' do
-    it 'prints out 1459' do
+    it 'prints out 1460' do
       run './fun_with_dates.rb 01/02/1980 01/02/1984'
-      expect(last_command_started).to have_output_on_stdout('1459')
+      expect(last_command_started).to have_output_on_stdout('1460')
     end
   end
 end
