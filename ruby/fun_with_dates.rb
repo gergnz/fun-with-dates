@@ -23,15 +23,19 @@ def yearstodays(year)
   (year - 1900) * 365
 end
 
+# rubocop:disable Metrics/AbcSize
 def leapdays(date2, date1)
   days = 0
   if (date1[2] % 4).zero?
     days += 1 if date1[1] == 2
-  else
-    days += date2[2] / 4 - date1[2] / 4
   end
-  days
+  if (date2[2] % 4).zero?
+    days -= 1 if date2[1] == 2
+    days += 1 if date2[0] == 29
+  end
+  days + date2[2] / 4 - date1[2] / 4
 end
+# rubocop:enable Metrics/AbcSize
 
 date1 = ARGV[0].split('/')
 date1 = date1.map(&:to_i)
