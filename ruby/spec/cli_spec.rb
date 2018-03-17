@@ -16,9 +16,9 @@ describe 'fun_with_dates_extremes', type: :aruba do
     end
   end
   context '01/01/1901 31/12/2999' do
-    it 'prints out 401400' do
+    it 'prints out 401407' do
       run './fun_with_dates.rb 01/01/1901 31/12/2999'
-      expect(last_command_started).to have_output_on_stdout('401400')
+      expect(last_command_started).to have_output_on_stdout('401407')
     end
   end
 end
