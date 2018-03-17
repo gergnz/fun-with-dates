@@ -20,16 +20,17 @@ def monthstodays(month)
 end
 
 def yearstodays(year)
-  days = (year - 1900) * 365
-  days + (year - 1900) / 4
+  (year - 1900) * 365
 end
 
-def leapdays(year1, year2)
-  if year2 > year1
-    ((year1 - 1900) / 4) - ((year2 - 1900) / 4)
+def leapdays(date2, date1)
+  days = 0
+  if (date1[2] % 4).zero?
+    days += 1 if date1[1] == 2
   else
-    ((year2 - 1900) / 4) - ((year1 - 1900) / 4)
+    days += date2[2] / 4 - date1[2] / 4
   end
+  days
 end
 
 date1 = ARGV[0].split('/')
@@ -41,9 +42,11 @@ days1 = yearstodays(date1[2]) + monthstodays(date1[1]) + date1[0]
 days2 = yearstodays(date2[2]) + monthstodays(date2[1]) + date2[0]
 
 days = if days2 > days1
-         days2 - days1 - 1
+         x = days2 - days1 - 1
+         x + leapdays(date2, date1)
        else
-         days1 - days2 - 1
+         x = days1 - days2 - 1
+         x + leapdays(date1, date2)
        end
 
 days = 0 if days.negative?
