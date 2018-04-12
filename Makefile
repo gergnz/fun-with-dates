@@ -10,7 +10,7 @@ dependencies:
 	dep ensure
 
 test:
-	go test github.com/gergnz/fun-with-dates/days
+	go test ./...
 
 linux-i386:
 	GOOS=linux GOARCH=386 go build -x -o fun_with_dates.linux_386 fun_with_dates.go
